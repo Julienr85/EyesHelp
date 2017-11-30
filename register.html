@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<title>ContactLensRemind</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+		<!-- Bootstrap CSS -->
+	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+
+	 <!-- Website CSS style -->
+	 <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+
+	 <!-- Website Font style -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+
+	<!-- Google Fonts -->
+	<link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+	<script>
+	function requestformulaire(callback) {
+
+		  var username = encodeURIComponent(document.getElementById("username").value);
+		  var name = encodeURIComponent(document.getElementById("name").value);
+			var email = encodeURIComponent(document.getElementById("email").value);
+			var password = encodeURIComponent(document.getElementById("password").value);
+			var password_confirm = encodeURIComponent(document.getElementById("password_confirm").value);
+
+			sessionStorage.setItem("email", email);
+
+			var http = new XMLHttpRequest();
+			var url = "RegisterBDD.php";
+			var params = "username=" + username + "&name=" + name +  "&email=" + email + "&password=" + password + "&password_confirm=" + password_confirm ;
+			http.open("POST", url, true);
+
+
+			//Send the proper header information along with the request
+			http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+			http.onreadystatechange = function() {//Call a function when the state changes.
+				if(http.readyState == 4 && http.status == 200) {
+						if (http.responseText == "Formulaire Validé"){
+							 window.location = "http://localhost:8888/EyesHelp/contactLensInfo.html";
+							 alert(http.responseText);
+						}
+						else {
+							window.location = "http://localhost:8888/EyesHelp/register.html";
+							alert(http.responseText);
+						}
+
+					}
+		  }
+
+			http.send(params);
+		}
+	</script>
+
+	</head>
+ <body>
+		<div class="container">
+			<div class="row main">
+				<div class="panel-heading">
+           <div class="panel-title text-center">
+           		<h1 class="title">Company Name</h1>
+           		<hr/>
+           	</div>
+        </div>
+				<div class="main-login main-center">
+					<form class="form-horizontal" data-toggle="validator" action="#"  method="post">
+						<div class="form-group">
+							<label for="username" class="cols-sm-2 control-label">Nom</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+									<input type="text" class="form-control" name="username" id="username"  placeholder="Nom" required>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="name" class="cols-sm-2 control-label">Prénom</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+									<input type="text"  required="required" class="form-control" name="name" id="name"  placeholder="Prénom" required></input>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="email" class="cols-sm-2 control-label">Your Email</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+									<input type="email" class="form-control"  name="email" id="email" placeholder="Email" data-error="Bruh, that email address is invalid" required>
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="password" class="cols-sm-2 control-label">Password</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+									<input type="password" class="form-control" name="password" id="password"  placeholder="Mot de passe : " required/>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+									<input type="password" class="form-control" name="password_confirm" id="password_confirm"  placeholder="Confirm your Password" required/>
+								</div>
+							</div>
+						</div>
+
+					  <div class="form-group">
+					    <div class="checkbox">
+					      <label>
+					        <input type="checkbox" id="terms" data-error="Before you wreck yourself" required>
+					         Validation des informations
+					      </label>
+					      <div class="help-block with-errors"></div>
+					    </div>
+					  </div>
+						<div class="form-group ">
+							<input type="submit" onclick="requestformulaire();" value="next" class="btn btn-primary btn-lg btn-block login-button"></input>
+						</div>
+						<div class="login-register">
+									<a href="index.html" onclick="fonction(this.href); return false;"> Login</a>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+</body>
+
+</html>

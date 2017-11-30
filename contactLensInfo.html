@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>ContactLensRemind</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+  <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+ <!-- Website CSS style -->
+ <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+
+ <!-- Website Font style -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+
+<!-- Google Fonts -->
+<link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+
+<script>
+  function requestformulaire(callback) {
+
+    var ProviderSelect = encodeURIComponent(document.getElementById("ProviderSelect").value);
+    var LensSelect = encodeURIComponent(document.getElementById("LensSelect").value);
+    var Renewal = encodeURIComponent(document.getElementById("Renewal").value);
+    var UseFrequency = encodeURIComponent(document.getElementById("UseFrequency").value);
+    var timeSlot = encodeURIComponent(document.getElementById("timeSlot").value);
+
+    var sessionId = sessionStorage.getItem("email");
+
+
+    var http = new XMLHttpRequest();
+    var url = "contactLensInfoBDD.php";
+    var params = "ProviderSelect=" + ProviderSelect + "&LensSelect=" + LensSelect + "&Renewal=" + Renewal + "&UseFrequency=" + UseFrequency + "&timeSlot=" + timeSlot + "&Mail_User=" + sessionId;
+    http.open("POST", url, true);
+
+    //Send the proper header information along with the request
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    http.onreadystatechange = function() {
+      if(http.readyState == 4 && http.status == 200) {
+          if (http.responseText == "Formulaire terminé"){
+            window.location = "http://localhost:8888/EyesHelp/index.html";
+              alert(http.responseText);
+          }
+          else
+            window.location = "http://localhost:8888/EyesHelp/register.html";
+
+        }
+    }
+
+    http.send(params);
+  }
+</script>
+
+<script>
+  var ALCON= ["DAILIES TOTAL 1 ®", "A Definir", "A Definir","Autres"];
+  var COOPERVISION= ["Biofinity Energys","A Definir", "A Definir","Autres"];
+  var CVE= ["AVANTI","A Definir", "A Definir","Autres"];
+  var JOHNSONetJOHNSON= ["ACUVUE® VITA™","A Definir", "A Definir","Autres"];
+
+
+  var changeLensName = function changeLensName(firstList) {
+  var timeSlot = document.getElementById("LensSelect");
+  //if you want to remove this default option use LensSelect.innerHTML=""
+  timeSlot.innerHTML="<option value=\"\">--- Selectionner ---</option>"; // to reset the second list everytime
+  var opt;
+
+    //test according to the selected value
+    switch (firstList.options[firstList.selectedIndex].value) {
+        case "ALCON":
+            for (var i=0; len=ALCON.length, i<len; i++) {
+                  opt = document.createElement("option");
+                  opt.value = ALCON[i];
+                  opt.text = ALCON[i];
+                  timeSlot.appendChild(opt);
+            }
+            break;
+        case "COOPERVISION":
+            for (var i=0; len=COOPERVISION.length, i<len; i++) {
+                  opt = document.createElement("option");
+                  opt.value = COOPERVISION[i];
+                  opt.text = COOPERVISION[i];
+                  timeSlot.appendChild(opt);
+            }
+            break;
+        case "CVE":
+            for (var i=0; len=CVE.length, i<len; i++) {
+                  opt = document.createElement("option");
+                  opt.value = CVE[i];
+                  opt.text = CVE[i];
+                  timeSlot.appendChild(opt);
+            }
+            break;
+        case "JOHNSONetJOHNSON":
+            for (var i=0; len=JOHNSONetJOHNSON.length, i<len; i++) {
+                  opt = document.createElement("option");
+                  opt.value = JOHNSONetJOHNSON[i];
+                  opt.text = JOHNSONetJOHNSON[i];
+                  timeSlot.appendChild(opt);
+            }
+            break;
+    }
+  }
+
+</script>
+
+<script>
+
+  var Journalier = ["1"];
+  var BiMensuel= ["15"];
+  var Mensuel= ["30"];
+  var Trimestriel= ["90"];
+
+  var one = ["12 h (Max) / jour"];
+  var fifteen= ["8h à 10h (Max) / jour"];
+  var thirthy= ["8h à 10h (Max) / jour"];
+  var ninety= ["8h à 10h (Max) / jour"];
+
+
+  var renewal = function renewal(firstList) {
+  var timeSlot = document.getElementById("timeSlot");
+  var UseFrequency = document.getElementById("UseFrequency");
+
+  UseFrequency.innerHTML="<option value=\"\">--- Selectionner ---</option>"; // to reset the second list everytime
+  timeSlot.innerHTML="<option value=\"\">--- Selectionner ---</option>"; // to reset the second list everytime
+
+  var opt,opt2;
+
+    //test according to the selected value
+    switch (firstList.options[firstList.selectedIndex].value) {
+        case "Journalier":
+                  opt = document.createElement("option");
+                  opt.value = Journalier;
+                  opt.text = Journalier;
+                  UseFrequency.appendChild(opt);
+
+                  opt2 = document.createElement("option");
+                  opt2.value = one;
+                  opt2.text = one;
+                  timeSlot.appendChild(opt2);
+
+            break;
+        case "Bi-Mensuel" :
+                  opt = document.createElement("option");
+                  opt.value = BiMensuel;
+                  opt.text = BiMensuel;
+                  UseFrequency.appendChild(opt);
+
+                  opt2 = document.createElement("option");
+                  opt2.value = fifteen;
+                  opt2.text = fifteen;
+                  timeSlot.appendChild(opt2);
+            break;
+        case "Mensuel":
+                  opt = document.createElement("option");
+                  opt.value = Mensuel;
+                  opt.text = Mensuel;
+                  UseFrequency.appendChild(opt);
+
+                  opt2 = document.createElement("option");
+                  opt2.value = thirthy;
+                  opt2.text = thirthy;
+                  timeSlot.appendChild(opt2);
+                break;
+        case "Trimestriel":
+                  opt = document.createElement("option");
+                  opt.value = Trimestriel;
+                  opt.text = Trimestriel;
+                  UseFrequency.appendChild(opt);
+
+                  opt2 = document.createElement("option");
+                  opt2.value = ninety;
+                  opt2.text = ninety;
+                  timeSlot.appendChild(opt2);
+          break;
+    }
+  }
+</script>
+
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="fr">
+<body>
+  <div class="container">
+    <div class="row main">
+      <div class="panel-heading">
+               <div class="panel-title text-center">
+                  <h1 class="title">Company Name</h1>
+                  <hr />
+                </div>
+            </div>
+      <div class="main-login main-center">
+        <form class="form-horizontal" action="#"  method="post">
+          <div class="form-group">
+            <label for="type" class="cols-sm-2 control-label">Fournisseur</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-eye fa" aria-hidden="true"></i></span>
+                    <select id="ProviderSelect" class="form-control" onchange="changeLensName(this);">
+                      <option>--- Selectionner ---</option>
+                      <option>ALCON</option>
+                      <option>COOPERVISION</option>
+                      <option>CVE</option>
+                      <option>JOHNSONetJOHNSON</option>
+                    </select>
+                </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="type" class="cols-sm-2 control-label">Nom lentille</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-eye fa" aria-hidden="true"></i></span>
+                    <select id="LensSelect" class="form-control">
+                      <option>--- Selectionner ---</option>
+                    </select>
+                </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="type" class="cols-sm-2 control-label">Renouvellement</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-eye fa" aria-hidden="true"></i></span>
+                    <select id="Renewal" class="form-control" onchange="renewal(this);">
+                      <option>--- Selectionner ---</option>
+                      <option>Journalier</option>
+                      <option>Bi-Mensuel</option>
+                      <option>Mensuel</option>
+                      <option>Trimestriel</option>
+                    </select>
+                </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="type" class="cols-sm-2 control-label">Fréquence d'utilisation (en jours)</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-eye fa" aria-hidden="true"></i></span>
+                    <select id="UseFrequency" name="UseFrequency" class="form-control">
+                      <option>--- Selectionner ---</option>
+                   </select>
+                </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="type" class="cols-sm-2 control-label">Plage Horraire</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-eye fa" aria-hidden="true"></i></span>
+                    <select id="timeSlot" class="form-control">
+                      <option>--- Selectionner ---</option>
+                    </select>
+                </div>
+            </div>
+          </div>
+
+
+          <div class="form-group ">
+            <input type="button" onclick="requestformulaire();" value="Submit" class="btn btn-primary btn-lg btn-block login-button"></input>
+          </div>
+          <div class="login-register">
+                <a href="index.html" onclick="fonction(this.href); return false;">Login</a>
+           </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+</body>
+
+</html>

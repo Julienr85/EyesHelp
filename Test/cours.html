@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>TP3 Question 1</title>
+  <meta charset="utf-8">
+  <meta name="description" content="165c. uniques">
+</head>
+
+<body>
+  <div id="page">
+    <!-- DIV : Aucun sens sémantique - zone géographique -->
+
+    <div>
+      <table id="myTable">
+      </table>
+    </div>
+    <script>
+      var ajax = function (url, success, error) {
+        var req = new XMLHttpRequest();
+        req.open('GET', url, true);
+        req.onload = function (aEvt) {
+            if(req.status == 200){
+              success(req.responseText)
+            }
+            else{
+              error(req)
+            }
+        };
+        req.send(null)
+      }
+
+      var table = document.getElementById("myTable");
+      ajax('https://api.wonderpush.com/v1/management/notifications?accessToken=YTUyODk0NjEwOGEwNzJiNThhN2E1NzA5ZGY0MDgyMDQ1ZDY1NmRjOTM2YTU1MTQ4NjM2NTIxZTBkZWFmNjEzZA', function (response) {
+        console.log(response)
+      }, function (req) {
+        console.error(req);
+      });
+
+
+
+    </script>
+  </div>
+</body>

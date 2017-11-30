@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Techniques AJAX - XMLHttpRequest</title>
+<script type="text/javascript">
+<!--
+function request(callback) {
+
+	var http = new XMLHttpRequest();
+	var name = encodeURIComponent(document.getElementById("nick").value);
+	var username = encodeURIComponent(document.getElementById("name").value);
+
+	var url = "connexion_test.php";
+	var params = "Nick=" + name + "&Name=" + username;
+	http.open("POST", url, true);
+
+	//Send the proper header information along with the request
+	http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+	http.onreadystatechange = function() {//Call a function when the state changes.
+		if(http.readyState == 4 && http.status == 200) {
+			alert(http.responseText);
+		}
+	}
+	http.send(params);
+}
+
+function readData(sData) {
+	alert(sData);
+	window.location.replace("http://stackoverflow.com");
+	}
+
+	function Redirect(url) {
+			window.location.replace	=url;
+	}
+//-->
+</script>
+
+<script>
+
+var A= ["Soup", "Juice", "Tea","Others"];
+var B= ["Soup","Juice","Water", "Others"];
+var C= ["Soup","Juice","Coffee", "Tea","Others"];
+
+var changeCat = function changeCat(firstList) {
+var newSel = document.getElementById("category");
+//if you want to remove this default option use newSel.innerHTML=""
+newSel.innerHTML="<option value=\"\">Select</option>"; // to reset the second list everytime
+var opt;
+
+	//test according to the selected value
+	switch (firstList.options[firstList.selectedIndex].value) {
+			case "A":
+					for (var i=0; len=A.length, i<len; i++) {
+								opt = document.createElement("option");
+								opt.value = A[i];
+								opt.text = A[i];
+								newSel.appendChild(opt);
+					}
+					break;
+			case "B":
+					for (var i=0; len=B.length, i<len; i++) {
+								opt = document.createElement("option");
+								opt.value = B[i];
+								opt.text = B[i];
+								newSel.appendChild(opt);
+					}
+					break;
+			case "C":
+					for (var i=0; len=C.length, i<len; i++) {
+								opt = document.createElement("option");
+								opt.value = C[i];
+								opt.text = C[i];
+								newSel.appendChild(opt);
+					}
+					break;
+	}
+
+}
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+
+</head>
+<body>
+<form>
+	<form data-toggle="validator" role="form">
+  <div class="form-group">
+    <label for="inputName" class="control-label">Name</label>
+    <input type="text" class="form-control" id="inputName" placeholder="Cina Saffary" required>
+  </div>
+  <div class="form-group has-feedback">
+    <label for="inputTwitter" class="control-label">Twitter</label>
+    <div class="input-group">
+      <span class="input-group-addon">@</span>
+      <input type="text" pattern="^[_A-z0-9]{1,}$" maxlength="15" class="form-control" id="inputTwitter" placeholder="1000hz" required>
+    </div>
+    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+    <div class="help-block with-errors">Hey look, this one has feedback icons!</div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail" class="control-label">Email</label>
+    <input type="email" class="form-control" id="inputEmail" placeholder="Email" data-error="Bruh, that email address is invalid" required>
+    <div class="help-block with-errors"></div>
+  </div>
+  <div class="form-group">
+    <label for="inputPassword" class="control-label">Password</label>
+    <div class="form-inline row">
+      <div class="form-group col-sm-6">
+        <input type="password" data-minlength="6" class="form-control" id="inputPassword" placeholder="Password" required>
+        <div class="help-block">Minimum of 6 characters</div>
+      </div>
+      <div class="form-group col-sm-6">
+        <input type="password" class="form-control" id="inputPasswordConfirm" data-match="#inputPassword" data-match-error="Whoops, these don't match" placeholder="Confirm" required>
+        <div class="help-block with-errors"></div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="radio">
+      <label>
+        <input type="radio" name="underwear" required>
+        Boxers
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="underwear" required>
+        Briefs
+      </label>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" id="terms" data-error="Before you wreck yourself" required>
+        Check yourself
+      </label>
+      <div class="help-block with-errors"></div>
+    </div>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+</form>
+
+</form>
+<select name="meal" id="meal" onchange="changeCat(this);">
+     <option value="">Select</option>
+     <option value="A">A</option>
+     <option value="B">B</option>
+     <option value="C">C</option>
+</select>
+
+<select name="category" id="category" size="5">
+     <option value="">Select</option>
+</select>
+
+
+</body>
+</html>
